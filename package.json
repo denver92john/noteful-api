@@ -8,11 +8,15 @@
     "dev": "nodemon src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
     "migrate:test": "set NODE_ENV=test&&npm run migrate",
+    "migrate:production": "set SSL=true&&set DATABASE_URL=postgres://ckgrpzktbprbyv:a18becae546c209f8a0bd050ac90fd0eb6003c660e1633b462658b4fff3fb5f1@ec2-174-129-231-25.compute-1.amazonaws.com:5432/dbdqoh3vced0lv&&npm run migrate",
     "start": "node src/server.js",
-    "predeploy": "npm audit",
+    "predeploy": "npm audit && npm run migrate:production",
     "deploy": "git push heroku master"
   },
   "keywords": [],
+  "engines": {
+    "node": "10.16.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -27,6 +31,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "cross-env": "^6.0.3",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.2",
     "postgrator-cli": "^3.3.0",
